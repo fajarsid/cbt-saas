@@ -30,7 +30,7 @@
                                         d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z" />
                                 </svg>
                             </span>
-                            <span class="sidebar-text fw-bold">RDEV CBT</span>
+                            <span class="sidebar-text fw-bold"> CBT</span>
                         </span>
                         <span>
                             <span class="badge badge-sm bg-secondary ms-1 text-gray-800">PRO</span>

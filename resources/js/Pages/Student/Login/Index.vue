@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>Login Siswa - RDEV CBT</title>
+        <title>Login Siswa -  CBT</title>
     </Head>
     <div class="row justify-content-center mt-5">
         <div class="col-md-5">

@@ -1,6 +1,6 @@
 .<template>
     <Head>
-        <title>Dashboard Siswa - RDEV CBT</title>
+        <title>Dashboard Siswa -  CBT</title>
     </Head>
     <div class="row">
         <div class="col-md-12">

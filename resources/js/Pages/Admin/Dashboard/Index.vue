@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>Dashboard - RDEV CBT</title>
+        <title>Dashboard - CBT</title>
     </Head>
     <div class="container-fluid mb-5 mt-5">
         <div class="row">
