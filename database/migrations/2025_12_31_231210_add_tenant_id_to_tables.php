@@ -14,7 +14,6 @@ return new class extends Migration
         // Add tenant_id to users table
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('tenant_id')->nullable()->after('id')->constrained()->nullOnDelete();
-            $table->foreignId('role_id')->nullable()->after('tenant_id')->constrained()->nullOnDelete();
             $table->index('tenant_id');
         });
 
@@ -81,15 +80,9 @@ return new class extends Migration
         $tables = ['users', 'students', 'classrooms', 'lessons', 'exams', 'exam_sessions', 'questions', 'exam_groups', 'answers', 'grades'];
 
         foreach ($tables as $tableName) {
-            Schema::table($tableName, function (Blueprint $table) use ($tableName) {
-                $table->dropForeign([$tableName === 'users' ? 'tenant_id' : 'tenant_id']);
-                $table->dropColumn('tenant_id');
+            Schema::table($tableName, function (Blueprint $table) {
+                $table->dropConstrainedForeignId('tenant_id');
             });
         }
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role_id']);
-            $table->dropColumn('role_id');
-        });
     }
 };
