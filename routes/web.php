@@ -1,6 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\TenantRegistrationController;
 use Illuminate\Support\Facades\Route;
+
+// Tenant Registration Routes (guest only)
+Route::middleware('guest')->group(function () {
+    Route::get('/register/tenant', [TenantRegistrationController::class, 'create'])->name('tenant.register');
+    Route::post('/register/tenant', [TenantRegistrationController::class, 'store'])->name('tenant.register.store');
+});
 
 //prefix "admin"
 Route::prefix('admin')->group(function() {
