@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class ClassroomController extends Controller
@@ -50,7 +51,7 @@ class ClassroomController extends Controller
     {
         //validate request
         $request->validate([
-            'title' => 'required|string|unique:classrooms'
+            'title' => ['required', 'string', Rule::unique('classrooms')->where('tenant_id', app('tenant')->id)]
         ]);
 
         //create classroom
@@ -90,7 +91,7 @@ class ClassroomController extends Controller
     {
         //validate request
         $request->validate([
-            'title' => 'required|string|unique:classrooms,title,'.$classroom->id,
+            'title' => ['required', 'string', Rule::unique('classrooms')->where('tenant_id', app('tenant')->id)->ignore($classroom->id)]
         ]);
 
         //update classroom

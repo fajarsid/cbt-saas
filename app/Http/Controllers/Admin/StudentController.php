@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Student;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Imports\StudentsImport;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -59,7 +60,7 @@ class StudentController extends Controller
         //validate request
         $request->validate([
             'name'          => 'required|string|max:255',
-            'nisn'          => 'required|unique:students',
+            'nisn'          => ['required', Rule::unique('students')->where('tenant_id', app('tenant')->id)],
             'gender'        => 'required|string',
             'password'      => 'required|confirmed',
             'classroom_id'  => 'required'
@@ -111,7 +112,7 @@ class StudentController extends Controller
         //validate request
         $request->validate([
             'name'          => 'required|string|max:255',
-            'nisn'          => 'required|unique:students,nisn,'.$student->id,
+            'nisn'          => ['required', Rule::unique('students')->where('tenant_id', app('tenant')->id)->ignore($student->id)],
             'gender'        => 'required|string',
             'classroom_id'  => 'required',
             'password'      => 'confirmed'

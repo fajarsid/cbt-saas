@@ -1,132 +1,91 @@
 <template>
     <Head>
-        <title>Login Siswa -  CBT</title>
+        <title>Login Siswa - CBT SaaS</title>
     </Head>
     <div class="row justify-content-center mt-5">
         <div class="col-md-5">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">CBT SaaS</h2>
+                <p class="text-muted">Platform Ujian Online</p>
+            </div>
             <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                <div v-if="errors.message" class="alert alert-danger mt-2">
-                    {{ errors.message }}
-                </div>
-                <div v-if="$page.props.session.error" class="alert alert-danger mt-2">
+                <h5 class="text-center mb-4">Login Siswa</h5>
+
+                <div v-if="$page.props.session?.error" class="alert alert-danger">
                     {{ $page.props.session.error }}
                 </div>
-                <form @submit.prevent="submit" class="mt-4">
 
+                <form @submit.prevent="submit">
                     <div class="form-group mb-4">
-                        <label for="email">Nisn</label>
+                        <label for="nisn">NISN</label>
                         <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-key"></i>
+                            <span class="input-group-text">
+                                <i class="fa fa-id-card"></i>
                             </span>
-                            <input type="number" class="form-control" v-model="form.nisn" placeholder="Nisn">
+                            <input type="text" class="form-control" v-model="form.nisn" placeholder="Masukkan NISN">
                         </div>
                         <div v-if="errors.nisn" class="alert alert-danger mt-2">
                             {{ errors.nisn }}
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="form-group mb-4">
-                            <label for="password">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon2">
-                                    <i class="fa fa-lock"></i>
-                                </span>
-                                <input type="password" placeholder="Password" class="form-control"
-                                    v-model="form.password">
-                            </div>
-                            <div v-if="errors.password" class="alert alert-danger mt-2">
-                                {{ errors.password }}
-                            </div>
+                    <div class="form-group mb-4">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <input type="password" placeholder="Masukkan Password" class="form-control"
+                                v-model="form.password">
                         </div>
-
-                        <div class="d-flex justify-content-between align-items-top mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="remember">
-                                <label class="form-check-label mb-0" for="remember">
-                                    Remember me
-                                </label>
-                            </div>
+                        <div v-if="errors.password" class="alert alert-danger mt-2">
+                            {{ errors.password }}
                         </div>
-
                     </div>
-                    
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-gray-800">LOGIN</button>
+
+                    <div class="d-grid mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">LOGIN SISWA</button>
                     </div>
                 </form>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                    <p class="mb-2">Admin / Penyelenggara?</p>
+                    <Link href="/login" class="btn btn-outline-secondary btn-sm me-2">
+                        Login Admin
+                    </Link>
+                    <Link href="/register/tenant" class="btn btn-outline-primary btn-sm">
+                        Daftar Organisasi
+                    </Link>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-    //import layout
-    import LayoutStudent from '../../../Layouts/Student.vue';
+<script setup>
+import { Head, Link, router } from '@inertiajs/vue3';
+import { reactive } from 'vue';
+import LayoutStudent from '../../../Layouts/Student.vue';
 
-    //import Head from Inertia
-    import {
-        Head
-    } from '@inertiajs/vue3';
+defineOptions({
+    layout: LayoutStudent
+});
 
-    //import reactive
-    import {
-        reactive
-    } from 'vue';
+defineProps({
+    errors: Object,
+});
 
-    //import inertia adapter
-    import {
-        Inertia
-    } from '@inertiajs/inertia';
+const form = reactive({
+    nisn: '',
+    password: '',
+});
 
-    export default {
-
-        //layout
-        layout: LayoutStudent,
-
-        //register component
-        components: {
-            Head
-        },
-
-        //props
-        props: {
-            errors: Object,
-        },
-
-        //inisialisasi composition API
-        setup() {
-
-            //define form state
-            const form = reactive({
-                nisn: '',
-                password: '',
-            });
-
-            //submit method
-            const submit = () => {
-
-                //send data to server
-                router.post('/students/login', {
-
-                    //data
-                    nisn: form.nisn,
-                    password: form.password,
-                });
-            }
-
-            //return
-            return {
-                form,
-                submit
-            }
-        }
-
-    }
-
+const submit = () => {
+    router.post('/students/login', {
+        nisn: form.nisn,
+        password: form.password,
+    });
+};
 </script>
-
-<style>
-
-</style>

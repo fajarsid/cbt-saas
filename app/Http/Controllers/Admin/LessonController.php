@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class LessonController extends Controller
@@ -49,7 +50,7 @@ class LessonController extends Controller
     {
         //validate request
         $request->validate([
-            'title' => 'required|string|unique:lessons',
+            'title' => ['required', 'string', Rule::unique('lessons')->where('tenant_id', app('tenant')->id)]
         ]);
 
         //create lesson
@@ -89,7 +90,7 @@ class LessonController extends Controller
     {
         //validate request
         $request->validate([
-            'title' => 'required|string|unique:lessons,title,'.$lesson->id,
+            'title' => ['required', 'string', Rule::unique('lessons')->where('tenant_id', app('tenant')->id)->ignore($lesson->id)]
         ]);
 
         //update lesson
