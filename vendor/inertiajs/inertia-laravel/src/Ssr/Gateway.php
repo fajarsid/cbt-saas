@@ -5,10 +5,9 @@ namespace Inertia\Ssr;
 interface Gateway
 {
     /**
-     * Dispatch the Inertia page to the Server Side Rendering engine.
+     * Dispatch the Inertia page to the SSR engine.
      *
-     * @param  array  $page
-     * @return Response|null
+     * @param  array<string, mixed>  $page
      */
     public function dispatch(array $page): ?Response;
 }

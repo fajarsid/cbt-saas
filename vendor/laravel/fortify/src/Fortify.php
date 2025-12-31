@@ -2,9 +2,12 @@
 
 namespace Laravel\Fortify;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 use Laravel\Fortify\Contracts\ConfirmPasswordViewResponse;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Contracts\LoginViewResponse;
+use Laravel\Fortify\Contracts\RedirectsIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
 use Laravel\Fortify\Contracts\RequestPasswordResetLinkViewResponse;
 use Laravel\Fortify\Contracts\ResetPasswordViewResponse;
@@ -44,6 +47,21 @@ class Fortify
      * @var bool
      */
     public static $registersRoutes = true;
+
+    /**
+     * The encrypter instance that is used to encrypt attributes.
+     *
+     * @var \Illuminate\Contracts\Encryption\Encrypter|null
+     */
+    public static $encrypter;
+
+    const PASSWORD_UPDATED = 'password-updated';
+    const PROFILE_INFORMATION_UPDATED = 'profile-information-updated';
+    const RECOVERY_CODES_GENERATED = 'recovery-codes-generated';
+    const TWO_FACTOR_AUTHENTICATION_CONFIRMED = 'two-factor-authentication-confirmed';
+    const TWO_FACTOR_AUTHENTICATION_DISABLED = 'two-factor-authentication-disabled';
+    const TWO_FACTOR_AUTHENTICATION_ENABLED = 'two-factor-authentication-enabled';
+    const VERIFICATION_LINK_SENT = 'verification-link-sent';
 
     /**
      * Get the username used for authentication.
@@ -229,6 +247,17 @@ class Fortify
     }
 
     /**
+     * Register a class / callback that should be used to redirect users for two factor authentication.
+     *
+     * @param  callable|string  $callback
+     * @return void
+     */
+    public static function redirectUserForTwoFactorAuthenticationUsing($callback)
+    {
+        app()->singleton(RedirectsIfTwoFactorAuthenticatable::class, $callback);
+    }
+
+    /**
      * Register a callback that is responsible for confirming existing user passwords as valid.
      *
      * @param  callable  $callback
@@ -242,10 +271,10 @@ class Fortify
     /**
      * Register a class / callback that should be used to create new users.
      *
-     * @param  string  $callback
+     * @param  callable|string  $callback
      * @return void
      */
-    public static function createUsersUsing(string $callback)
+    public static function createUsersUsing($callback)
     {
         app()->singleton(CreatesNewUsers::class, $callback);
     }
@@ -253,10 +282,10 @@ class Fortify
     /**
      * Register a class / callback that should be used to update user profile information.
      *
-     * @param  string  $callback
+     * @param  callable|string  $callback
      * @return void
      */
-    public static function updateUserProfileInformationUsing(string $callback)
+    public static function updateUserProfileInformationUsing($callback)
     {
         app()->singleton(UpdatesUserProfileInformation::class, $callback);
     }
@@ -264,10 +293,10 @@ class Fortify
     /**
      * Register a class / callback that should be used to update user passwords.
      *
-     * @param  string  $callback
+     * @param  callable|string  $callback
      * @return void
      */
-    public static function updateUserPasswordsUsing(string $callback)
+    public static function updateUserPasswordsUsing($callback)
     {
         app()->singleton(UpdatesUserPasswords::class, $callback);
     }
@@ -275,10 +304,10 @@ class Fortify
     /**
      * Register a class / callback that should be used to reset user passwords.
      *
-     * @param  string  $callback
+     * @param  callable|string  $callback
      * @return void
      */
-    public static function resetUserPasswordsUsing(string $callback)
+    public static function resetUserPasswordsUsing($callback)
     {
         app()->singleton(ResetsUserPasswords::class, $callback);
     }
@@ -292,6 +321,29 @@ class Fortify
     {
         return Features::enabled(Features::twoFactorAuthentication()) &&
                Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm');
+    }
+
+    /**
+     * Set the encrypter instance that will be used to encrypt attributes.
+     *
+     * @param  \Illuminate\Contracts\Encryption\Encrypter|null  $encrypter
+     * @return static
+     */
+    public static function encryptUsing($encrypter)
+    {
+        static::$encrypter = $encrypter;
+
+        return new static;
+    }
+
+    /**
+     * Get the current encrypter being used by the model.
+     *
+     * @return \Illuminate\Contracts\Encryption\Encrypter
+     */
+    public static function currentEncrypter()
+    {
+        return static::$encrypter ?? Model::$encrypter ?? Crypt::getFacadeRoot();
     }
 
     /**

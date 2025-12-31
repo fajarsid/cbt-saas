@@ -6,9 +6,13 @@ use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use PHPUnit\Framework\Assert as PHPUnit;
 
+/**
+ * @deprecated This trait is deprecated and will be removed in a future version.
+ * @see https://github.com/inertiajs/inertia-laravel/pull/338
+ */
 trait PageObject
 {
-    public function component(string $value = null, $shouldExist = null): self
+    public function component(?string $value = null, $shouldExist = null): self
     {
         PHPUnit::assertSame($value, $this->component, 'Unexpected Inertia page component.');
 
@@ -23,7 +27,7 @@ trait PageObject
         return $this;
     }
 
-    protected function prop(string $key = null)
+    protected function prop(?string $key = null)
     {
         return Arr::get($this->props, $key);
     }
@@ -49,6 +53,8 @@ trait PageObject
             'props' => $this->props,
             'url' => $this->url,
             'version' => $this->version,
+            'encryptHistory' => $this->encryptHistory,
+            'clearHistory' => $this->clearHistory,
         ];
     }
 }

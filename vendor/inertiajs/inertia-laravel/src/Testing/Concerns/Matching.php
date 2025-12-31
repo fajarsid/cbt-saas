@@ -9,6 +9,10 @@ use Illuminate\Http\Resources\Json\ResourceResponse;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert as PHPUnit;
 
+/**
+ * @deprecated This trait is deprecated and will be removed in a future version.
+ * @see https://github.com/inertiajs/inertia-laravel/pull/338
+ */
 trait Matching
 {
     public function whereAll(array $bindings): self
@@ -68,7 +72,7 @@ trait Matching
 
     abstract protected function dotPath(string $key): string;
 
-    abstract protected function prop(string $key = null);
+    abstract protected function prop(?string $key = null);
 
-    abstract public function has(string $key, $value = null, Closure $scope = null);
+    abstract public function has(string $key, $value = null, ?Closure $scope = null);
 }

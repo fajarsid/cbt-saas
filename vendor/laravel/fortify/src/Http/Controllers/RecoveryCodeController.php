@@ -2,10 +2,11 @@
 
 namespace Laravel\Fortify\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laravel\Fortify\Actions\GenerateNewRecoveryCodes;
+use Laravel\Fortify\Contracts\RecoveryCodesGeneratedResponse;
+use Laravel\Fortify\Fortify;
 
 class RecoveryCodeController extends Controller
 {
@@ -22,7 +23,7 @@ class RecoveryCodeController extends Controller
             return [];
         }
 
-        return response()->json(json_decode(decrypt(
+        return response()->json(json_decode(Fortify::currentEncrypter()->decrypt(
             $request->user()->two_factor_recovery_codes
         ), true));
     }
@@ -32,14 +33,12 @@ class RecoveryCodeController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Laravel\Fortify\Actions\GenerateNewRecoveryCodes  $generate
-     * @return \Illuminate\Http\Response
+     * @return \Laravel\Fortify\Contracts\RecoveryCodesGeneratedResponse
      */
     public function store(Request $request, GenerateNewRecoveryCodes $generate)
     {
         $generate($request->user());
 
-        return $request->wantsJson()
-                    ? new JsonResponse('', 200)
-                    : back()->with('status', 'recovery-codes-generated');
+        return app(RecoveryCodesGeneratedResponse::class);
     }
 }
