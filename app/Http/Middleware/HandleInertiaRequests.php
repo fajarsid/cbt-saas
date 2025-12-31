@@ -25,6 +25,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $impersonatingTenantId = $request->session()->get('impersonating_tenant_id');
+        $impersonatingTenant = null;
+
+        if ($impersonatingTenantId) {
+            $impersonatingTenant = \App\Models\Tenant::find($impersonatingTenantId);
+        }
+
         return [
             ...parent::share($request),
             'session' => [
@@ -36,6 +43,10 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
                 'student' => $request->user('student'),
             ],
+            'impersonating' => $impersonatingTenant ? [
+                'tenant_id' => $impersonatingTenant->id,
+                'tenant_name' => $impersonatingTenant->name,
+            ] : null,
         ];
     }
 }

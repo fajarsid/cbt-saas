@@ -33,19 +33,21 @@
                                 <thead class="thead-dark">
                                     <tr class="border-0">
                                         <th class="border-0 rounded-start" style="width:5%">No.</th>
-                                        <th class="border-0">Nama Organisasi</th>
-                                        <th class="border-0">Email</th>
+                                        <th class="border-0">Organisasi</th>
                                         <th class="border-0">Plan</th>
                                         <th class="border-0">Status</th>
-                                        <th class="border-0">Kuota</th>
-                                        <th class="border-0 rounded-end" style="width:15%">Aksi</th>
+                                        <th class="border-0">Statistik</th>
+                                        <th class="border-0 rounded-end" style="width:18%">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(tenant, index) in tenants.data" :key="index">
                                         <td class="fw-bold text-center">{{ ++index + (tenants.current_page - 1) * tenants.per_page }}</td>
-                                        <td>{{ tenant.name }}</td>
-                                        <td>{{ tenant.email }}</td>
+                                        <td>
+                                            <strong>{{ tenant.name }}</strong>
+                                            <br>
+                                            <small class="text-muted">{{ tenant.email }}</small>
+                                        </td>
                                         <td>
                                             <span :class="planBadgeClass(tenant.plan)">{{ tenant.plan }}</span>
                                         </td>
@@ -53,13 +55,23 @@
                                             <span :class="statusBadgeClass(tenant.status)">{{ tenant.status }}</span>
                                         </td>
                                         <td>
-                                            <small>Siswa: {{ tenant.max_students }}<br>Ujian: {{ tenant.max_exams }}</small>
+                                            <small>
+                                                <i class="fa fa-users text-muted me-1"></i> {{ tenant.students_count || 0 }}/{{ tenant.max_students }}
+                                                <span class="mx-2">|</span>
+                                                <i class="fa fa-file-alt text-muted me-1"></i> {{ tenant.exams_count || 0 }}/{{ tenant.max_exams }}
+                                            </small>
                                         </td>
                                         <td class="text-center">
-                                            <Link :href="`/admin/tenants/${tenant.id}/edit`" class="btn btn-sm btn-info border-0 shadow me-2" type="button">
+                                            <Link :href="`/admin/tenants/${tenant.id}`" class="btn btn-sm btn-success border-0 shadow me-1" title="Lihat Detail">
+                                                <i class="fa fa-eye"></i>
+                                            </Link>
+                                            <Link :href="`/admin/tenants/${tenant.id}/edit`" class="btn btn-sm btn-info border-0 shadow me-1" title="Edit">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </Link>
-                                            <button @click.prevent="destroy(tenant.id)" class="btn btn-sm btn-danger border-0">
+                                            <button @click.prevent="impersonate(tenant.id)" class="btn btn-sm btn-warning border-0 me-1" title="Login as Tenant">
+                                                <i class="fa fa-sign-in-alt"></i>
+                                            </button>
+                                            <button @click.prevent="destroy(tenant.id)" class="btn btn-sm btn-danger border-0" title="Hapus">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -124,6 +136,23 @@ export default {
             });
         }
 
+        const impersonate = (id) => {
+            Swal.fire({
+                title: 'Login sebagai Tenant?',
+                text: "Anda akan masuk ke dashboard tenant ini",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, lanjutkan!'
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    router.post(`/admin/tenants/${id}/impersonate`);
+                }
+            });
+        }
+
         const planBadgeClass = (plan) => {
             const classes = {
                 'free': 'badge bg-secondary',
@@ -147,6 +176,7 @@ export default {
             search,
             handleSearch,
             destroy,
+            impersonate,
             planBadgeClass,
             statusBadgeClass,
         }

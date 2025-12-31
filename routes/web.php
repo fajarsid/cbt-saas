@@ -21,6 +21,10 @@ Route::prefix('admin')->group(function() {
         //route resource tenants (organisasi)
         Route::resource('/tenants', \App\Http\Controllers\Admin\TenantController::class, ['as' => 'admin']);
 
+        //tenant impersonation routes
+        Route::post('/tenants/{tenant}/impersonate', [\App\Http\Controllers\Admin\TenantController::class, 'impersonate'])->name('admin.tenants.impersonate');
+        Route::post('/stop-impersonate', [\App\Http\Controllers\Admin\TenantController::class, 'stopImpersonate'])->name('admin.stop-impersonate');
+
         //route resource lessons
         Route::resource('/lessons', \App\Http\Controllers\Admin\LessonController::class, ['as' => 'admin']);
 

@@ -12,6 +12,8 @@
                     <div class="card-body">
                         <h5 class="card-title mb-4">Tambah Organisasi Baru</h5>
                         <form @submit.prevent="submit">
+                            <!-- Organisasi Info -->
+                            <h6 class="text-muted mb-3">Informasi Organisasi</h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -22,7 +24,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Email</label>
+                                        <label class="form-label fw-bold">Email Organisasi</label>
                                         <input type="email" class="form-control" v-model="form.email" placeholder="email@organisasi.com">
                                         <div v-if="errors.email" class="alert alert-danger mt-2">{{ errors.email }}</div>
                                     </div>
@@ -81,8 +83,36 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Alamat</label>
-                                <textarea class="form-control" rows="3" v-model="form.address" placeholder="Alamat lengkap organisasi"></textarea>
+                                <textarea class="form-control" rows="2" v-model="form.address" placeholder="Alamat lengkap organisasi"></textarea>
                                 <div v-if="errors.address" class="alert alert-danger mt-2">{{ errors.address }}</div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Admin Account -->
+                            <h6 class="text-muted mb-3">Akun Admin Organisasi</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Nama Admin</label>
+                                        <input type="text" class="form-control" v-model="form.admin_name" placeholder="Nama lengkap admin">
+                                        <div v-if="errors.admin_name" class="alert alert-danger mt-2">{{ errors.admin_name }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Email Admin</label>
+                                        <input type="email" class="form-control" v-model="form.admin_email" placeholder="admin@organisasi.com">
+                                        <div v-if="errors.admin_email" class="alert alert-danger mt-2">{{ errors.admin_email }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Password Admin</label>
+                                        <input type="password" class="form-control" v-model="form.admin_password" placeholder="Min. 6 karakter">
+                                        <div v-if="errors.admin_password" class="alert alert-danger mt-2">{{ errors.admin_password }}</div>
+                                    </div>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-md btn-primary border-0 shadow">
@@ -121,6 +151,9 @@ export default {
             plan: 'free',
             max_students: 50,
             max_exams: 10,
+            admin_name: '',
+            admin_email: '',
+            admin_password: '',
         });
 
         const submit = () => {
