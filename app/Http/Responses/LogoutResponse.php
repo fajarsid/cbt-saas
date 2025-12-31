@@ -2,18 +2,13 @@
 
 namespace App\Http\Responses;
 
+use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogoutResponse implements LogoutResponseContract
 {
-
-    /**
-     * toResponse
-     *
-     * @param  mixed $request
-     * @return void
-     */
-    public function toResponse($request)
+    public function toResponse($request): Response
     {
         return redirect('/');
     }

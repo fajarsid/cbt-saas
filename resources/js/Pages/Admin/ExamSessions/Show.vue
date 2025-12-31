@@ -99,10 +99,10 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import inertia adapter
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3';
 
     //import sweet alert2
     import Swal from 'sweetalert2';
@@ -142,7 +142,7 @@
                 .then((result) => {
                     if (result.isConfirmed) {
 
-                        Inertia.delete(`/admin/exam_sessions/${exam_session_id}/enrolle/${exam_group_id}/destroy`);
+                        router.delete(`/admin/exam_sessions/${exam_session_id}/enrolle/${exam_group_id}/destroy`);
 
                         Swal.fire({
                             title: 'Deleted!',

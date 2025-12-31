@@ -79,7 +79,7 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import reactive from vue
     import {
@@ -131,7 +131,7 @@
             const submit = () => {
 
                 //send data to server
-                Inertia.post('/admin/exam_sessions', {
+                router.post('/admin/exam_sessions', {
                     //data
                     title: form.title,
                     exam_id: form.exam_id,

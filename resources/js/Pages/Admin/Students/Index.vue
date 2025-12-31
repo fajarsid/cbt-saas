@@ -88,7 +88,7 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import ref from vue
     import {
@@ -127,7 +127,7 @@
 
             //define method search
             const handleSearch = () => {
-                Inertia.get('/admin/students', {
+                router.get('/admin/students', {
 
                     //send params "q" with value from state "search"
                     q: search.value,
@@ -148,7 +148,7 @@
                     .then((result) => {
                         if (result.isConfirmed) {
 
-                            Inertia.delete(`/admin/students/${id}`);
+                            router.delete(`/admin/students/${id}`);
 
                             Swal.fire({
                                 title: 'Deleted!',

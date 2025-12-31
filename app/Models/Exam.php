@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Exam extends Model
 {
     use HasFactory;
 
-    /**
-     * fillable
-     *
-     * @var array
-     */
     protected $fillable = [
         'title',
         'lesson_id',
@@ -25,33 +22,28 @@ class Exam extends Model
         'show_answer',
     ];
 
-    /**
-     * lesson
-     *
-     * @return void
-     */
-    public function lesson()
+    public function lesson(): BelongsTo
     {
         return $this->belongsTo(Lesson::class);
     }
 
-    /**
-     * classroom
-     *
-     * @return void
-     */
-    public function classroom()
+    public function classroom(): BelongsTo
     {
         return $this->belongsTo(Classroom::class);
     }
 
-    /**
-     * questions
-     *
-     * @return void
-     */
-    public function questions()
+    public function questions(): HasMany
     {
-        return $this->hasMany(Question::class)->orderBy('id', 'DESC');
+        return $this->hasMany(Question::class)->orderBy('id', 'desc');
+    }
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(ExamSession::class);
+    }
+
+    public function grades(): HasMany
+    {
+        return $this->hasMany(Grade::class);
     }
 }

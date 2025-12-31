@@ -4,27 +4,21 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthStudent
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        //check if user is logged in
-        $student = auth()->guard('student')->user();
+        $student = $request->user('student');
 
-        //if not, redirect to login page
         if (!$student) {
             return redirect('/');
         }
 
-        //if user is logged in, continue to next middleware
         return $next($request);
     }
 }

@@ -70,7 +70,7 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import ref from vue
     import {
@@ -78,7 +78,7 @@
     } from 'vue';
 
     //import inertia adapter
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3';
 
     //import sweet alert2
     import Swal from 'sweetalert2';
@@ -107,7 +107,7 @@
 
             //define method search
             const handleSearch = () => {
-                Inertia.get('/admin/classrooms', {
+                router.get('/admin/classrooms', {
 
                     //send params "q" with value from state "search"
                     q: search.value,
@@ -128,7 +128,7 @@
                 .then((result) => {
                     if (result.isConfirmed) {
 
-                        Inertia.delete(`/admin/classrooms/${id}`);
+                        router.delete(`/admin/classrooms/${id}`);
 
                         Swal.fire({
                             title: 'Deleted!',
