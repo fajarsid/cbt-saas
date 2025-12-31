@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Role;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,13 +47,9 @@ class TenantRegistrationController extends Controller
                 'trial_ends_at' => now()->addDays(14),
             ]);
 
-            // Get tenant admin role
-            $tenantAdminRole = Role::tenantAdmin();
-
             // Create admin user
             $user = User::create([
                 'tenant_id' => $tenant->id,
-                'role_id' => $tenantAdminRole?->id,
                 'name' => $request->admin_name,
                 'email' => $request->admin_email,
                 'password' => Hash::make($request->password),
@@ -70,7 +65,7 @@ class TenantRegistrationController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->with('error', 'Terjadi kesalahan saat mendaftarkan organisasi. Silakan coba lagi.');
         }
     }

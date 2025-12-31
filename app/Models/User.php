@@ -15,7 +15,6 @@ class User extends Authenticatable
 
     protected $fillable = [
         'tenant_id',
-        'role_id',
         'name',
         'email',
         'password',
@@ -40,36 +39,5 @@ class User extends Authenticatable
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
-    }
-
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function isSuperAdmin(): bool
-    {
-        return $this->role?->slug === 'super-admin';
-    }
-
-    public function isTenantAdmin(): bool
-    {
-        return $this->role?->slug === 'tenant-admin';
-    }
-
-    public function hasPermission(string $permission): bool
-    {
-        return $this->role?->hasPermission($permission) ?? false;
-    }
-
-    public function belongsToTenant(?int $tenantId = null): bool
-    {
-        if ($this->isSuperAdmin()) {
-            return true;
-        }
-
-        $tenantId = $tenantId ?? (app()->has('tenant') ? app('tenant')->id : null);
-
-        return $this->tenant_id === $tenantId;
     }
 }
