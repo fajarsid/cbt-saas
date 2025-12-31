@@ -98,7 +98,7 @@
     //import Link from Inertia
     import {
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     export default {
 

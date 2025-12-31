@@ -2,40 +2,30 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Models\Student;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): RedirectResponse
     {
-        //validate the form data
-        $this->validate($request, [
-            'nisn'      => 'required',
-            'password'  => 'required',
+        $request->validate([
+            'nisn' => 'required',
+            'password' => 'required',
         ]);
 
-        //cek nisn dan password
-        $student = Student::where([
-            'nisn'      => $request->nisn,
-            'password'  => $request->password
-        ])->first();
+        $credentials = [
+            'nisn' => $request->nisn,
+            'password' => $request->password,
+        ];
 
-        if(!$student) {
-            return redirect()->back()->with('error', 'NISN atau Password salah');
+        if (Auth::guard('student')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('student.dashboard');
         }
-        
-        //login the user
-        auth()->guard('student')->login($student);
 
-        //redirect to dashboard
-        return redirect()->route('student.dashboard');
+        return redirect()->back()->with('error', 'NISN atau Password salah');
     }
 }

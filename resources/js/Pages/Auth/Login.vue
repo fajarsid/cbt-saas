@@ -59,7 +59,7 @@
     //import Head from Inertia
     import {
         Head
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import reactive
     import {
@@ -100,7 +100,7 @@
             const submit = () => {
 
                 //send data to server
-                Inertia.post('/login', {
+                router.post('/login', {
 
                     //data
                     email: form.email,

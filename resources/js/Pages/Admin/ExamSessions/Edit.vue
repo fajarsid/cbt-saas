@@ -79,7 +79,7 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import reactive from vue
     import {

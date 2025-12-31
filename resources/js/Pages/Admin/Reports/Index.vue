@@ -85,13 +85,13 @@
     //import Head from Inertia
     import {
         Head
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import reactive from vue
     import { reactive } from 'vue';
 
     //import inerita adapter
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3';
 
     export default {
 
@@ -122,7 +122,7 @@
             const filter = () => {
 
                 //HTTP request
-                Inertia.get('/admin/reports/filter', {
+                router.get('/admin/reports/filter', {
 
                     //send data to server
                     exam_id: form.exam_id,

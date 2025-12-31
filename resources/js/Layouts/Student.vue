@@ -18,22 +18,6 @@
     </div>
 </template>
 
-<script>
-
-    //import Link
-    import { Link } from '@inertiajs/inertia-vue3';
-
-    export default {
-
-        //register components
-        components: {
-            Link
-        },
-
-    }
-
+<script setup>
+import { Link } from '@inertiajs/vue3';
 </script>
-
-<style>
-
-</style>

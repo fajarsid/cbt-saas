@@ -96,13 +96,13 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import reactive from vue
     import { reactive } from 'vue';
 
     //import inerita adapter
-    import { Inertia } from '@inertiajs/inertia';
+    import { router } from '@inertiajs/vue3';
 
     //import sweet alert2
     import Swal from 'sweetalert2';
@@ -141,7 +141,7 @@
             const submit = () => {
 
                 //send data to server
-                Inertia.post('/admin/students', {
+                router.post('/admin/students', {
                     //data
                     nisn: form.nisn,
                     name: form.name,

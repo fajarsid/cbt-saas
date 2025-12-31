@@ -137,7 +137,7 @@
     import {
         Head,
         Link
-    } from '@inertiajs/inertia-vue3';
+    } from '@inertiajs/vue3';
 
     //import ref
     import {
@@ -228,7 +228,7 @@
                 });
 
                 //redirect to prevPage
-                Inertia.get(`/student/exam/${props.id}/${props.page - 1}`);
+                router.get(`/student/exam/${props.id}/${props.page - 1}`);
 
             });
 
@@ -241,7 +241,7 @@
                 });
 
                 //redirect to nextPage
-                Inertia.get(`/student/exam/${props.id}/${props.page + 1}`);
+                router.get(`/student/exam/${props.id}/${props.page + 1}`);
             });
 
             //method clickQuestion
@@ -253,13 +253,13 @@
                 });
 
                 //redirect to questin
-                Inertia.get(`/student/exam/${props.id}/${index + 1}`);
+                router.get(`/student/exam/${props.id}/${index + 1}`);
             });
 
             //method submit answer
             const submitAnswer = ((exam_id, question_id, answer) => {
 
-                Inertia.post('/student/exam-answer', {
+                router.post('/student/exam-answer', {
                     exam_id: exam_id,
                     exam_session_id: props.exam_group.exam_session.id,
                     question_id: question_id,
@@ -276,7 +276,7 @@
             //method endExam
             const endExam = (() => {
 
-                Inertia.post('/student/exam-end', {
+                router.post('/student/exam-end', {
                     exam_group_id: props.exam_group.id,
                     exam_id: props.exam_group.exam.id,
                     exam_session_id: props.exam_group.exam_session.id,
