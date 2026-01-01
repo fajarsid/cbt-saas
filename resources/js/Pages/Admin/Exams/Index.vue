@@ -41,7 +41,6 @@
                                         <th class="border-0 rounded-end" style="width:15%">Aksi</th>
                                     </tr>
                                 </thead>
-                                <div class="mt-2"></div>
                                 <tbody>
                                     <tr v-for="(exam, index) in exams.data" :key="index">
                                         <td class="fw-bold text-center">{{ ++index + (exams.current_page - 1) * exams.per_page }}</td>

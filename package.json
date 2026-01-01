@@ -15,7 +15,8 @@
     },
     "dependencies": {
         "@chenfengyuan/vue-countdown": "^2.0.0",
-        "@inertiajs/vue3": "^2.3.5",
+        "@inertiajs/core": "^2.3.6",
+        "@inertiajs/vue3": "^2.3.6",
         "@tinymce/tinymce-vue": "^4.0.7",
         "@vuepic/vue-datepicker": "^3.2.2",
         "bootstrap": "^5.3.8",

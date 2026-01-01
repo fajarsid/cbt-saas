@@ -153,5 +153,72 @@
 </script>
 
 <style>
+/* =========================
+   DASHBOARD CARD ANIMATION
+   ========================= */
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: 
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    animation: fadeUp 0.6s ease forwards;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.15),
+        0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* stagger animation */
+.dashboard-card:nth-child(1) { animation-delay: 0.05s; }
+.dashboard-card:nth-child(2) { animation-delay: 0.10s; }
+.dashboard-card:nth-child(3) { animation-delay: 0.15s; }
+.dashboard-card:nth-child(4) { animation-delay: 0.20s; }
+
+/* =========================
+   ICON EFFECT
+   ========================= */
+
+.icon-shape {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 6px 14px rgba(0, 0, 0, 0.15);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.dashboard-card:hover .icon-shape {
+    transform: scale(1.08) rotate(2deg);
+    box-shadow: 
+        0 10px 22px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   FADE UP ANIMATION
+   ========================= */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.dashboard-card:active {
+    transform: scale(0.97);
+}
 
 </style>

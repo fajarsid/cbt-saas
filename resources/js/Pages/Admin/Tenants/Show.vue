@@ -154,47 +154,60 @@
                 </div>
 
                 <!-- Tenant Details -->
-                <div class="card border-0 shadow mt-4">
-                    <div class="card-header bg-white">
-                        <h6 class="mb-0">Detail Organisasi</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td class="text-muted" width="150">Telepon</td>
-                                        <td>{{ tenant.phone || '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Alamat</td>
-                                        <td>{{ tenant.address || '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Slug</td>
-                                        <td><code>{{ tenant.slug }}</code></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td class="text-muted" width="150">Domain</td>
-                                        <td>{{ tenant.domain || '-' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Plan</td>
-                                        <td><span :class="planBadgeClass(tenant.plan)">{{ tenant.plan }}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Status</td>
-                                        <td><span :class="statusBadgeClass(tenant.status)">{{ tenant.status }}</span></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="card border-0 shadow mt-4">
+    <div class="card-header bg-white">
+        <h6 class="mb-0">Detail Organisasi</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td class="text-muted" width="150">Telepon</td>
+                            <td>{{ tenant.phone || '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Alamat</td>
+                            <td>{{ tenant.address || '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Slug</td>
+                            <td><code>{{ tenant.slug }}</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <td class="text-muted" width="150">Domain</td>
+                            <td>{{ tenant.domain || '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Plan</td>
+                            <td>
+                                <span :class="planBadgeClass(tenant.plan)">
+                                    {{ tenant.plan }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Status</td>
+                            <td>
+                                <span :class="statusBadgeClass(tenant.status)">
+                                    {{ tenant.status }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
             </div>
         </div>
     </div>

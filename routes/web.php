@@ -84,19 +84,22 @@ Route::prefix('admin')->group(function() {
 
         //route index reports export
         Route::get('/reports/export', [\App\Http\Controllers\Admin\ReportController::class, 'export'])->name('admin.reports.export');
+        Route::resource('/users', \App\Http\Controllers\Admin\UserController::class, ['as' => 'admin']);
+   
     });
 });
 
 //route homepage
+// Route::get('/', function () {
+
+//     if(auth()->guard('student')->check()) {
+//         return redirect()->route('student.dashboard');
+//     }
+//     return \Inertia\Inertia::render('Student/Login/Index');
+// });
+
 Route::get('/', function () {
-
-    //cek session student
-    if(auth()->guard('student')->check()) {
-        return redirect()->route('student.dashboard');
-    }
-
-    //return view login
-    return \Inertia\Inertia::render('Student/Login/Index');
+    return \Inertia\Inertia::render('Front/LandingPage');
 });
 
 //login students

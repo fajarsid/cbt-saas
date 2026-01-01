@@ -39,6 +39,7 @@
                     <div class="card-body">
 
                         <div class="table-responsive">
+                            
                             <table class="table table-bordered table-centered table-nowrap mb-0 rounded">
                                 <thead class="thead-dark">
                                     <tr class="border-0">
@@ -51,7 +52,7 @@
                                         <th class="border-0 rounded-end" style="width:15%">Aksi</th>
                                     </tr>
                                 </thead>
-                                <div class="mt-2"></div>
+                                
                                 <tbody>
                                     <tr v-for="(student, index) in students.data" :key="index">
                                         <td class="fw-bold text-center">
@@ -76,102 +77,61 @@
         </div>
     </div>
 </template>
-
 <script>
-    //import layout
-    import LayoutAdmin from '../../../Layouts/Admin.vue';
+import LayoutAdmin from '../../../Layouts/Admin.vue'
+import Pagination from '../../../Components/Pagination.vue'
+import { Head, Link, router } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
-    //import component pagination
-    import Pagination from '../../../Components/Pagination.vue';
+export default {
+    layout: LayoutAdmin,
 
-    //import Heade and Link from Inertia
-    import {
+    components: {
         Head,
-        Link
-    } from '@inertiajs/vue3';
+        Link,
+        Pagination
+    },
 
-    //import ref from vue
-    import {
-        ref
-    } from 'vue';
+    props: {
+        students: Object,
+    },
 
-    //import inertia adapter
-    import {
-        Inertia
-    } from '@inertiajs/inertia';
+    setup() {
+        const search = ref(
+            new URL(document.location).searchParams.get('q') || ''
+        )
 
-    //import sweet alert2
-    import Swal from 'sweetalert2';
+        const handleSearch = () => {
+            router.get('/admin/students', {
+                q: search.value,
+            })
+        }
 
-    export default {
-        //layout
-        layout: LayoutAdmin,
+        const destroy = (id) => {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Siswa akan dihapus!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(`/admin/students/${id}`)
+                }
+            })
+        }
 
-        //register component
-        components: {
-            Head,
-            Link,
-            Pagination
-        },
-
-        //props
-        props: {
-            students: Object,
-        },
-
-        //inisialisasi composition API
-        setup() {
-
-            //define state search
-            const search = ref('' || (new URL(document.location)).searchParams.get('q'));
-
-            //define method search
-            const handleSearch = () => {
-                router.get('/admin/students', {
-
-                    //send params "q" with value from state "search"
-                    q: search.value,
-                });
-            }
-
-            //define method destroy
-            const destroy = (id) => {
-                Swal.fire({
-                        title: 'Apakah Anda yakin?',
-                        text: "Anda tidak akan dapat mengembalikan ini!",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-
-                            router.delete(`/admin/students/${id}`);
-
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: 'Siswa Berhasil Dihapus!.',
-                                icon: 'success',
-                                timer: 2000,
-                                showConfirmButton: false,
-                            });
-                        }
-                    })
-            }
-
-            //return
-            return {
-                search,
-                handleSearch,
-                destroy,
-            }
-
+        return {
+            search,
+            handleSearch,
+            destroy,
         }
     }
-
+}
 </script>
+
 
 <style>
 

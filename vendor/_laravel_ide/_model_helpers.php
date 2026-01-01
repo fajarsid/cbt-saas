@@ -15,6 +15,7 @@ namespace App\Models {
      * @property int $question_id
      * @property int $exam_session_id
      * @property int $exam_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Question $question
      * @property-read \App\Models\Student $student
@@ -22,6 +23,7 @@ namespace App\Models {
      * @property-read \App\Models\ExamSession $examSession
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Answer>|Answer whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Answer>|Answer whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Answer>|Answer whereExamId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Answer>|Answer whereExamSessionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Answer>|Answer whereQuestionId($value)
@@ -339,6 +341,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $title
+     * @property int $tenant_id
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Student> $students
      * @property-read int|null $students_count
@@ -346,6 +349,7 @@ namespace App\Models {
      * @property-read int|null $exams_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Classroom>|Classroom whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Classroom>|Classroom whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Classroom>|Classroom whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Classroom>|Classroom whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Classroom>|Classroom whereUpdatedAt($value)
@@ -663,6 +667,7 @@ namespace App\Models {
      * @property int $classroom_id
      * @property int $lesson_id
      * @property string $title
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Lesson $lesson
      * @property-read \App\Models\Classroom $classroom
@@ -674,6 +679,7 @@ namespace App\Models {
      * @property-read int|null $grades_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Exam>|Exam whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Exam>|Exam whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exam>|Exam whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exam>|Exam whereLessonId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Exam>|Exam whereClassroomId($value)
@@ -993,12 +999,14 @@ namespace App\Models {
      * @property int $student_id
      * @property int $exam_session_id
      * @property int $exam_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Exam $exam
      * @property-read \App\Models\ExamSession $examSession
      * @property-read \App\Models\Student $student
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<ExamGroup>|ExamGroup whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ExamGroup>|ExamGroup whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamGroup>|ExamGroup whereExamId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamGroup>|ExamGroup whereExamSessionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamGroup>|ExamGroup whereStudentId($value)
@@ -1314,6 +1322,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon $start_time
      * @property string $title
      * @property int $exam_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ExamGroup> $examGroups
      * @property-read int|null $examGroups_count
@@ -1324,6 +1333,7 @@ namespace App\Models {
      * @property-read int|null $answers_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<ExamSession>|ExamSession whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<ExamSession>|ExamSession whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamSession>|ExamSession whereExamId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamSession>|ExamSession whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<ExamSession>|ExamSession whereStartTime($value)
@@ -1644,12 +1654,14 @@ namespace App\Models {
      * @property int $student_id
      * @property int $exam_session_id
      * @property int $exam_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Exam $exam
      * @property-read \App\Models\ExamSession $examSession
      * @property-read \App\Models\Student $student
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Grade>|Grade whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Grade>|Grade whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grade>|Grade whereExamId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grade>|Grade whereExamSessionId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Grade>|Grade whereStudentId($value)
@@ -1967,11 +1979,13 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $title
+     * @property int $tenant_id
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Exam> $exams
      * @property-read int|null $exams_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Lesson>|Lesson whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Lesson>|Lesson whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Lesson>|Lesson whereTitle($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Lesson>|Lesson whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Lesson>|Lesson whereUpdatedAt($value)
@@ -2289,12 +2303,14 @@ namespace App\Models {
      * @property string|null $option_1
      * @property string $question
      * @property int $exam_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Exam $exam
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Answer> $answers
      * @property-read int|null $answers_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Question>|Question whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Question>|Question whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Question>|Question whereExamId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Question>|Question whereQuestion($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Question>|Question whereOption1($value)
@@ -2616,6 +2632,7 @@ namespace App\Models {
      * @property string $name
      * @property int $nisn
      * @property int $classroom_id
+     * @property int $tenant_id
      * @property int $id
      * @property-read \App\Models\Classroom $classroom
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Grade> $grades
@@ -2626,6 +2643,7 @@ namespace App\Models {
      * @property-read int|null $answers_count
      * @property-read \App\Models\Tenant $tenant
      * @method static \Illuminate\Database\Eloquent\Builder<Student>|Student whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Student>|Student whereTenantId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Student>|Student whereClassroomId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Student>|Student whereNisn($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Student>|Student whereName($value)
@@ -3292,7 +3310,6 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $email_verified_at
      * @property string $email
      * @property string $name
-     * @property int|null $role_id
      * @property int|null $tenant_id
      * @property int $id
      * @property-read \App\Models\Tenant $tenant
@@ -3302,7 +3319,6 @@ namespace App\Models {
      * @property-read int|null $notifications_count
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereTenantId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRoleId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereName($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereEmail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereEmailVerifiedAt($value)

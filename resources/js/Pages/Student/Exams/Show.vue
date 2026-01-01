@@ -153,7 +153,7 @@
     //import inertia adapter
     import {
         Inertia
-    } from '@inertiajs/inertia';
+    } from '@inertiajs/vue3';
     
     //import sweet alert2
     import Swal from 'sweetalert2';
