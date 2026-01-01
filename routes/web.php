@@ -25,6 +25,25 @@ Route::prefix('admin')->group(function() {
         Route::post('/tenants/{tenant}/impersonate', [\App\Http\Controllers\Admin\TenantController::class, 'impersonate'])->name('admin.tenants.impersonate');
         Route::post('/stop-impersonate', [\App\Http\Controllers\Admin\TenantController::class, 'stopImpersonate'])->name('admin.stop-impersonate');
 
+        //route resource plans (paket langganan)
+        Route::resource('/plans', \App\Http\Controllers\Admin\PlanController::class, ['as' => 'admin']);
+
+        //route resource subscriptions (langganan)
+        Route::resource('/subscriptions', \App\Http\Controllers\Admin\SubscriptionController::class, ['as' => 'admin']);
+        Route::post('/subscriptions/{subscription}/cancel', [\App\Http\Controllers\Admin\SubscriptionController::class, 'cancel'])->name('admin.subscriptions.cancel');
+        Route::post('/subscriptions/{subscription}/renew', [\App\Http\Controllers\Admin\SubscriptionController::class, 'renew'])->name('admin.subscriptions.renew');
+
+        //route resource invoices
+        Route::resource('/invoices', \App\Http\Controllers\Admin\InvoiceController::class, ['as' => 'admin'])->only(['index', 'show']);
+        Route::post('/invoices/{invoice}/mark-paid', [\App\Http\Controllers\Admin\InvoiceController::class, 'markAsPaid'])->name('admin.invoices.markPaid');
+        Route::post('/invoices/{invoice}/send-reminder', [\App\Http\Controllers\Admin\InvoiceController::class, 'sendReminder'])->name('admin.invoices.sendReminder');
+        Route::get('/invoices/{invoice}/download', [\App\Http\Controllers\Admin\InvoiceController::class, 'download'])->name('admin.invoices.download');
+
+        //route activity logs
+        Route::get('/activity-logs', [\App\Http\Controllers\Admin\ActivityLogController::class, 'index'])->name('admin.activity-logs.index');
+        Route::get('/activity-logs/export', [\App\Http\Controllers\Admin\ActivityLogController::class, 'export'])->name('admin.activity-logs.export');
+        Route::get('/activity-logs/{activityLog}', [\App\Http\Controllers\Admin\ActivityLogController::class, 'show'])->name('admin.activity-logs.show');
+
         //route resource lessons
         Route::resource('/lessons', \App\Http\Controllers\Admin\LessonController::class, ['as' => 'admin']);
 
@@ -85,7 +104,29 @@ Route::prefix('admin')->group(function() {
         //route index reports export
         Route::get('/reports/export', [\App\Http\Controllers\Admin\ReportController::class, 'export'])->name('admin.reports.export');
         Route::resource('/users', \App\Http\Controllers\Admin\UserController::class, ['as' => 'admin']);
-   
+
+        // Tenant Settings routes (for tenant admins)
+        Route::get('/settings', [\App\Http\Controllers\Tenant\SettingsController::class, 'index'])->name('settings.index');
+        Route::post('/settings/general', [\App\Http\Controllers\Tenant\SettingsController::class, 'updateGeneral'])->name('settings.general');
+        Route::post('/settings/branding', [\App\Http\Controllers\Tenant\SettingsController::class, 'updateBranding'])->name('settings.branding');
+        Route::post('/settings/notification', [\App\Http\Controllers\Tenant\SettingsController::class, 'updateNotification'])->name('settings.notification');
+        Route::post('/settings/test-whatsapp', [\App\Http\Controllers\Tenant\SettingsController::class, 'testWhatsApp'])->name('settings.testWhatsApp');
+        Route::get('/settings/quota', [\App\Http\Controllers\Tenant\SettingsController::class, 'quota'])->name('settings.quota');
+
+        // Notifications routes
+        Route::get('/notifications', [\App\Http\Controllers\Tenant\NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('/notifications/{notification}/read', [\App\Http\Controllers\Tenant\NotificationController::class, 'markAsRead'])->name('notifications.read');
+        Route::post('/notifications/read-all', [\App\Http\Controllers\Tenant\NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
+        Route::delete('/notifications/{notification}', [\App\Http\Controllers\Tenant\NotificationController::class, 'destroy'])->name('notifications.destroy');
+        Route::get('/notifications/unread-count', [\App\Http\Controllers\Tenant\NotificationController::class, 'unreadCount'])->name('notifications.unreadCount');
+        Route::post('/notifications/announcement', [\App\Http\Controllers\Tenant\NotificationController::class, 'sendAnnouncement'])->name('notifications.announcement');
+
+        // Export routes
+        Route::get('/export', [\App\Http\Controllers\Tenant\ExportController::class, 'index'])->name('export.index');
+        Route::get('/export/students', [\App\Http\Controllers\Tenant\ExportController::class, 'exportStudents'])->name('export.students');
+        Route::get('/export/exam-results/{exam}', [\App\Http\Controllers\Tenant\ExportController::class, 'exportExamResults'])->name('export.examResults');
+        Route::get('/export/backup', [\App\Http\Controllers\Tenant\ExportController::class, 'exportBackup'])->name('export.backup');
+
     });
 });
 
