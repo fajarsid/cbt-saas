@@ -137,6 +137,21 @@ Route::prefix('admin')->group(function() {
         Route::post('/notification-settings/send-test', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'sendTestMessage'])->name('notification-settings.sendTest');
         Route::get('/notification-settings/preview', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'previewTemplate'])->name('notification-settings.preview');
 
+        // Billing routes (for tenant admins)
+        Route::get('/billing', [\App\Http\Controllers\Tenant\BillingController::class, 'index'])->name('billing.index');
+        Route::get('/billing/plans', [\App\Http\Controllers\Tenant\BillingController::class, 'plans'])->name('billing.plans');
+        Route::post('/billing/upgrade', [\App\Http\Controllers\Tenant\BillingController::class, 'upgradePlan'])->name('billing.upgrade');
+        Route::get('/billing/invoices', [\App\Http\Controllers\Tenant\BillingController::class, 'invoices'])->name('billing.invoices');
+        Route::get('/billing/invoice/{invoice}', [\App\Http\Controllers\Tenant\BillingController::class, 'invoice'])->name('billing.invoice');
+        Route::post('/billing/invoice/{invoice}/confirm', [\App\Http\Controllers\Tenant\BillingController::class, 'confirmPayment'])->name('billing.confirm');
+        Route::get('/billing/invoice/{invoice}/download', [\App\Http\Controllers\Tenant\BillingController::class, 'downloadInvoice'])->name('billing.download');
+        Route::post('/billing/cancel', [\App\Http\Controllers\Tenant\BillingController::class, 'cancelSubscription'])->name('billing.cancel');
+
+        // Tenant Activity Logs routes
+        Route::get('/activity-logs', [\App\Http\Controllers\Tenant\ActivityLogController::class, 'index'])->name('activity-logs.index');
+        Route::get('/activity-logs/export', [\App\Http\Controllers\Tenant\ActivityLogController::class, 'export'])->name('activity-logs.export');
+        Route::get('/activity-logs/{activityLog}', [\App\Http\Controllers\Tenant\ActivityLogController::class, 'show'])->name('activity-logs.show');
+
     });
 });
 

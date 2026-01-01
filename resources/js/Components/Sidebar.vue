@@ -289,6 +289,17 @@
                     </Link>
                 </li>
 
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/billing') }">
+                    <Link href="/admin/billing" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-wallet icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Billing</span>
+                        </span>
+                    </Link>
+                </li>
+
             </ul>
         </div>
     </nav>
