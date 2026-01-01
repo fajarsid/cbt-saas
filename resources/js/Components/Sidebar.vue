@@ -206,6 +206,78 @@
                     </Link>
                 </li>
 
+                <li role="separator" class="dropdown-divider mt-2 mb-2 border-gray-700"></li>
+
+                <!-- SaaS Features Menu -->
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/plans') }">
+                    <Link href="/admin/plans" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-box icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Paket</span>
+                        </span>
+                    </Link>
+                </li>
+
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/subscriptions') }">
+                    <Link href="/admin/subscriptions" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-credit-card icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Langganan</span>
+                        </span>
+                    </Link>
+                </li>
+
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/invoices') }">
+                    <Link href="/admin/invoices" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-file-invoice icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Invoice</span>
+                        </span>
+                    </Link>
+                </li>
+
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/activity-logs') }">
+                    <Link href="/admin/activity-logs" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-history icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Activity Log</span>
+                        </span>
+                    </Link>
+                </li>
+
+                <li role="separator" class="dropdown-divider mt-2 mb-2 border-gray-700"></li>
+
+                <!-- Tenant Settings Menu -->
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/settings') }">
+                    <Link href="/admin/settings" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-cog icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Pengaturan</span>
+                        </span>
+                    </Link>
+                </li>
+
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/export') }">
+                    <Link href="/admin/export" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fa fa-download icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Export Data</span>
+                        </span>
+                    </Link>
+                </li>
+
             </ul>
         </div>
     </nav>
