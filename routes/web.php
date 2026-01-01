@@ -127,6 +127,16 @@ Route::prefix('admin')->group(function() {
         Route::get('/export/exam-results/{exam}', [\App\Http\Controllers\Tenant\ExportController::class, 'exportExamResults'])->name('export.examResults');
         Route::get('/export/backup', [\App\Http\Controllers\Tenant\ExportController::class, 'exportBackup'])->name('export.backup');
 
+        // Notification Settings routes (WhatsApp/Fonnte configuration)
+        Route::get('/notification-settings', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'index'])->name('notification-settings.index');
+        Route::post('/notification-settings/fonnte', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'updateFonnte'])->name('notification-settings.fonnte');
+        Route::post('/notification-settings/preferences', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'updatePreferences'])->name('notification-settings.preferences');
+        Route::post('/notification-settings/templates', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'updateTemplates'])->name('notification-settings.templates');
+        Route::post('/notification-settings/reset-template', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'resetTemplate'])->name('notification-settings.resetTemplate');
+        Route::post('/notification-settings/test-connection', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'testConnection'])->name('notification-settings.testConnection');
+        Route::post('/notification-settings/send-test', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'sendTestMessage'])->name('notification-settings.sendTest');
+        Route::get('/notification-settings/preview', [\App\Http\Controllers\Tenant\NotificationSettingsController::class, 'previewTemplate'])->name('notification-settings.preview');
+
     });
 });
 
