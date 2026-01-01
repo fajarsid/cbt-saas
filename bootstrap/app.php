@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'student' => \App\Http\Middleware\AuthStudent::class,
             'tenant' => \App\Http\Middleware\TenantMiddleware::class,
+            'quota' => \App\Http\Middleware\EnforceQuota::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
