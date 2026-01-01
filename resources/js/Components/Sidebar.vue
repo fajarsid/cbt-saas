@@ -267,6 +267,17 @@
                     </Link>
                 </li>
 
+                <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/notification-settings') }">
+                    <Link href="/admin/notification-settings" class="nav-link d-flex justify-content-between">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fab fa-whatsapp icon icon-xs me-2"></i>
+                            </span>
+                            <span class="sidebar-text">Notifikasi WA</span>
+                        </span>
+                    </Link>
+                </li>
+
                 <li class="nav-item" :class="{ 'active': $page.url.startsWith('/admin/export') }">
                     <Link href="/admin/export" class="nav-link d-flex justify-content-between">
                         <span>

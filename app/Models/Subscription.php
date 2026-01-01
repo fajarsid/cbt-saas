@@ -11,6 +11,7 @@ class Subscription extends Model
     protected $fillable = [
         'tenant_id',
         'plan_id',
+        'price',
         'status',
         'starts_at',
         'ends_at',
@@ -70,5 +71,35 @@ class Subscription extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
+    }
+
+    /**
+     * Renew subscription
+     */
+    public function renew($endsAt): void
+    {
+        $this->update([
+            'status' => 'active',
+            'ends_at' => $endsAt,
+            'cancelled_at' => null,
+        ]);
+
+        // Update tenant quotas from plan
+        if ($this->plan) {
+            $this->tenant->update([
+                'current_plan_id' => $this->plan_id,
+                'max_students' => $this->plan->max_students,
+                'max_exams' => $this->plan->max_exams,
+                'plan' => $this->plan->slug,
+            ]);
+        }
+    }
+
+    /**
+     * Get formatted price
+     */
+    public function getFormattedPriceAttribute(): string
+    {
+        return 'Rp ' . number_format($this->price ?? 0, 0, ',', '.');
     }
 }
